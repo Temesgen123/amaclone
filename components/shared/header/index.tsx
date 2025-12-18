@@ -10,7 +10,7 @@ import Search from './search';
 export default function Header() {
   return (
     <header className="bg-[#010733] text-white">
-      <div className="px-2">
+      <div className="">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Link
@@ -42,7 +42,7 @@ export default function Header() {
             <MenuIcon />
             All
           </Button>
-          <div className="flex items-center flex-wrap gap-3 overflow-x-scroll max-h-[42px]">
+          <div className="flex items-center flex-wrap gap-3 overflow-hidden max-h-10.5">
             {data.headerMenu.map((menu) => (
               <Link
                 key={menu.href}
