@@ -96,5 +96,4 @@ const productSchema = new Schema<IProduct>(
 const Product =
   (models.Product as Model<IProduct>) ||
   model<IProduct>('Product', productSchema);
-
 export default Product;

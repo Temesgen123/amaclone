@@ -7,7 +7,7 @@ export async function getAllCategories() {
   await connectToDatabase();
   const categories = await Product.find({ isPublished: true }).distinct(
     'category'
-  );
+  ); //This function searches a product with isPublished true value in Products Collection, then puts the value of 'category' field in the categories array. It takes only distinct values of category field.
   return categories;
 }
 
