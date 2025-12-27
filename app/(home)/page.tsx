@@ -63,6 +63,7 @@ export default async function Page() {
     },
   ];
   const todaysDeals = await getProductsByTag({ tag: 'todays-deal' });
+  console.log('This is Todays Deal : ', todaysDeals);
   return (
     <>
       <HomeCarousel items={data.carousels} />
