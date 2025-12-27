@@ -1,16 +1,16 @@
 'use server';
 
 import { connectToDatabase } from '../db';
-import Product from '@/lib/db/models/product.model';
+import Product, { IProduct } from '@/lib/db/models/product.model';
 
+//This function (getAllCategories) searches a product with isPublished value true in Products Collection, then puts the value of 'category' field in the categories array. It takes only distinct values of category field. Finally, returns array of values of category field in categories array.
 export async function getAllCategories() {
   await connectToDatabase();
   const categories = await Product.find({ isPublished: true }).distinct(
     'category'
-  ); //This function searches a product with isPublished true value in Products Collection, then puts the value of 'category' field in the categories array. It takes only distinct values of category field.
+  );
   return categories;
 }
-
 export async function getProductsForCard({
   tag,
   limit = 4,
@@ -37,4 +37,20 @@ export async function getProductsForCard({
     href: string;
     image: string;
   }[];
+}
+export async function getProductsByTag({
+  tag,
+  limit = 10,
+}: {
+  tag: string;
+  limit?: number;
+}) {
+  await connectToDatabase();
+  const products = await Product.find({
+    tag: { $in: [tag] },
+    isPublished: true,
+  })
+    .sort({ createdAt: 'desc' })
+    .limit(limit);
+  return JSON.parse(JSON.stringify(products)) as IProduct[];
 }
