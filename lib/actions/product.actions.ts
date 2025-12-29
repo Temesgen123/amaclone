@@ -1,9 +1,10 @@
 'use server';
+//Product action is a server-side functions to communicate with Product table (Collections) in the database.
 
 import { connectToDatabase } from '../db';
 import Product, { IProduct } from '@/lib/db/models/product.model';
-
 //This function (getAllCategories) searches a product with isPublished value true in Products Collection, then puts the value of 'category' field in the categories array. It takes only distinct values of category field. Finally, returns array of values of category field in categories array.
+
 export async function getAllCategories() {
   await connectToDatabase();
   const categories = await Product.find({ isPublished: true }).distinct(
