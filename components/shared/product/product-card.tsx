@@ -47,7 +47,7 @@ const ProductCard = ({
       <p className="font-bold">{product.brand}</p>
       <Link
         href={`/product/${product.slug}`}
-        className="overflow-hidden text-ellipsis"
+        className="overflow-hidden text-ellipsis line-clamp-3 "
         style={{
           display: '-webkit-box',
           WebkitLineClamp: 2,

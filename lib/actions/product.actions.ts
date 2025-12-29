@@ -47,7 +47,7 @@ export async function getProductsByTag({
 }) {
   await connectToDatabase();
   const products = await Product.find({
-    tag: { $in: [tag] },
+    tags: { $in: [tag] },
     isPublished: true,
   })
     .sort({ createdAt: 'desc' })

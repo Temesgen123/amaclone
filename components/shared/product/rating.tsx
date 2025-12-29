@@ -18,24 +18,24 @@ export default function Rating({
       {[...Array(fullStarts)].map((_, i) => (
         <Star
           key={`full-${i}`}
-          className={`w-${size} h-${size} fill-primary text-primary`}
+          className={`w-${size} h-${size} fill-[#fae334] text-[#fae334]`}
         />
       ))}
       {partialStar > 0 && (
         <div className="relative">
-          <Star className={`w-${size} h-${size} text-primary`} />
+          <Star className={`w-${size} h-${size} text-[#fae334]`} />
           <div
             className="absolute top-0 left-0 overflow-hidden"
             style={{ width: `${partialStar * 100}%` }}
           >
-            <Star className="w-6 h-6 fill-primary text-primary" />
+            <Star className="w-6 h-6 fill-[#fae334] text-[#fae334]" />
           </div>
         </div>
       )}
       {[...Array(emptyStarts)].map((_, i) => (
         <Star
           key={`empty-${i}`}
-          className={`w-${size} h-${size} text-primary`}
+          className={`w-${size} h-${size} text-[#fae334]`}
         />
       ))}
     </div>

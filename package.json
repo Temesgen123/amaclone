@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "seed": "npx tsx ./lib/db/seed.ts ",
+    "testme": "npx tsx ./lib/db/testingfile.ts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
