@@ -43,7 +43,7 @@ const ProductCard = ({
     </Link>
   );
   const ProductDetails = () => (
-    <div className="flex-1 space-y-2">
+    <div className="flex-1 space-y-2 bg-slate-50">
       <p className="font-bold">{product.brand}</p>
       <Link
         href={`/product/${product.slug}`}
