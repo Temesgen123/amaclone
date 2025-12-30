@@ -1,10 +1,10 @@
 'use server';
-import { PAGE_SIZE } from '../constants';
-//Product action is a server-side functions to communicate with Product table (Collections) in the database.
 
+//Product action is a server-side functions to communicate with Product table (Collections) in the database.
+import { PAGE_SIZE } from '../constants';
 import { connectToDatabase } from '../db';
 import Product, { IProduct } from '@/lib/db/models/product.model';
-import { FilterQuery } from 'mongoose';
+
 //This function (getAllCategories) searches a product with isPublished value true in Products Collection, then puts the value of 'category' field in the categories array. It takes only distinct values of category field. Finally, returns array of values of category field in categories array.
 
 export async function getAllCategories() {
@@ -79,12 +79,14 @@ export async function getRelatedProductsByCategory({
   page: number;
 }) {
   await connectToDatabase();
+
   const skipAmount = (Number(page) - 1) * limit;
-  const conditions: FilterQuery<typeof Product> = {
+  const conditions = {
     isPublished: true,
     category,
     _id: { $ne: productId },
-  };
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } as any;
   const products = await Product.find(conditions)
     .sort({ numSales: 'desc' })
     .skip(skipAmount)
