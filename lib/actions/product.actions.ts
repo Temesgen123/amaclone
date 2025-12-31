@@ -6,7 +6,6 @@ import { connectToDatabase } from '../db';
 import Product, { IProduct } from '@/lib/db/models/product.model';
 
 //This function (getAllCategories) searches a product with isPublished value true in Products Collection, then puts the value of 'category' field in the categories array. It takes only distinct values of category field. Finally, returns array of values of category field in categories array.
-
 export async function getAllCategories() {
   await connectToDatabase();
   const categories = await Product.find({ isPublished: true }).distinct(
@@ -79,7 +78,6 @@ export async function getRelatedProductsByCategory({
   page: number;
 }) {
   await connectToDatabase();
-
   const skipAmount = (Number(page) - 1) * limit;
   const conditions = {
     isPublished: true,
@@ -91,6 +89,7 @@ export async function getRelatedProductsByCategory({
     .sort({ numSales: 'desc' })
     .skip(skipAmount)
     .limit(limit);
+
   const productsCount = await Product.countDocuments(conditions);
   return {
     data: JSON.parse(JSON.stringify(products)) as IProduct[],

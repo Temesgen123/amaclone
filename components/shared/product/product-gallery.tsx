@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 export default function ProductGallery({ images }: { images: string[] }) {
   const [selectedImage, setSelectedImage] = useState(0);

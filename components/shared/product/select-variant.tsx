@@ -38,9 +38,11 @@ export default function SelectVaraint({
               >
                 <div
                   style={{ background: x }}
-                  className="h-4 w-4 rounded-full border border-b-muted-foreground"
+                  className="h-6 w-6 rounded-full border border-b-muted-foreground"
                 ></div>
-                {x}
+                <div>
+                  <span>{x}</span>
+                </div>
               </Link>
             </Button>
           ))}
