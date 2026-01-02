@@ -9,6 +9,8 @@ import ProductGallery from '@/components/shared/product/product-gallery';
 import { Separator } from '@/components/ui/separator';
 import ProductSlider from '@/components/shared/product/product-slider';
 import Rating from '@/components/shared/product/rating';
+import BrowsingHistoryList from '@/components/shared/browsing-history-list';
+import AddToBrowsingHistory from '@/components/shared/product/add-to-browsing-history';
 
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
@@ -40,15 +42,19 @@ export default async function ProductDetails(props: {
   });
   return (
     <div>
+      <AddToBrowsingHistory
+        id={product._id.toString()}
+        category={product.category}
+      />
       <section className="max-h-screen">
         <div className="grid grid-cols-1 md:grid-cols-5">
           <div className="col-span-2">
-            <ProductGallery images={product.images} />
+            <ProductGallery images={product.images || null} />
           </div>
           <div className="flex w-full flex-col gap-2 md:p-5 col-span-2">
             <div className="flex flex-col gap-3">
-              <p className="p-medium-16 rounded-full bg-gray-500/10 text-gray-500">
-                <span>Brand {product.brand}</span>
+              <p className="p-medium-16 rounded-full bg-gray-500/10 text-gray-500 font-bold">
+                <span>Brand {` ${product.brand} `}</span>
                 {product.category}
               </p>
               <h1 className="font-bold text-lg lg:text-xl">{product.name}</h1>
@@ -108,6 +114,9 @@ export default async function ProductDetails(props: {
           products={relatedProducts.data}
           title={`Best sellers in ${product.category}`}
         />
+      </section>
+      <section>
+        <BrowsingHistoryList className="mt-10" />
       </section>
     </div>
   );
