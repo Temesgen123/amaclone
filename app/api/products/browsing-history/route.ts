@@ -14,7 +14,8 @@ export const GET = async (request: NextRequest) => {
   }
   const productIds = productIdsParam.split(',');
   const categories = categoriesParam.split(',');
-  const filter =
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const filter: any =
     listType === 'history'
       ? {
           _id: { $in: productIds },
@@ -24,7 +25,8 @@ export const GET = async (request: NextRequest) => {
           _id: { $nin: productIds },
         };
   await connectToDatabase();
-  const products = await Product.find(filter);
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const products = await Product.find(filter as any);
   if (listType === 'history')
     return NextResponse.json(
       products.sort(
