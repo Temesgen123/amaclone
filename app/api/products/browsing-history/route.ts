@@ -25,8 +25,8 @@ export const GET = async (request: NextRequest) => {
           _id: { $nin: productIds },
         };
   await connectToDatabase();
-  //eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const products = await Product.find(filter as any);
+
+  const products = await Product.find(filter);
   if (listType === 'history')
     return NextResponse.json(
       products.sort(
