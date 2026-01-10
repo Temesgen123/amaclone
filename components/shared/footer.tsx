@@ -20,26 +20,28 @@ export default function Footer() {
       </div>
       <div className="flex justify-between px-16 py-8">
         <div className="flex flex-col items-start">
-          <h1 className="font-bold text-lg py-2">Get To Know Us</h1>
+          <h1 className="font-bold text-sm md:text-lg py-2">Get To Know Us</h1>
           <Link href={''}>About Amaclone</Link>
           <Link href={''}>Careers</Link>
           <Link href={''}>Press Releases</Link>
           <Link href={''}>Contact</Link>
         </div>
         <div className="flex flex-col items-start">
-          <h1 className="font-bold text-lg py-2">Connect With Us</h1>
+          <h1 className="font-bold text-sm md:text-lg py-2">Connect With Us</h1>
           <Link href={''}>Facebook</Link>
           <Link href={''}>Twitter/X</Link>
           <Link href={''}>Instagram</Link>
         </div>
         <div className="flex flex-col items-start">
-          <h1 className="font-bold text-lg py-2">Make Money With Us</h1>
+          <h1 className="font-bold text-sm md:text-lg py-2">
+            Make Money With Us
+          </h1>
           <Link href={''}>Sell On Amaclone</Link>
           <Link href={''}>Build Your Brand</Link>
           <Link href={''}>Advertise Your Products</Link>
         </div>
         <div className="flex flex-col items-start">
-          <h1 className="font-bold text-lg py-2">Let Us Help You</h1>
+          <h1 className="font-bold text-sm md:text-lg py-2">Let Us Help You</h1>
           <Link href={''}>Your Account</Link>
           <Link href={''}>Returns Centre</Link>
           <Link href={''}>Recalls and Product Safety Alerts</Link>
@@ -56,7 +58,7 @@ export default function Footer() {
           <p>&copy; 2011 - 2025, {APP_NAME}, Inc. or its affiliates</p>
         </div>
         <div className="mt-4 flex justify-center text-sm text-gray-400">
-          123 Main St., Houston, TX 77081 | +1 (281) 777-9999
+          123 Main St., Houston, TX 77001 | +1 (281) 777-9999
         </div>
       </div>
     </footer>

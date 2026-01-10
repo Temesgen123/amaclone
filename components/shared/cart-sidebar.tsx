@@ -1,7 +1,6 @@
 import useCartStore from '@/hooks/use-cart-store';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import React from 'react';
 import { Button, buttonVariants } from '../ui/button';
 import { Separator } from '../ui/separator';
 import { ScrollArea } from '../ui/scroll-area';

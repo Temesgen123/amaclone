@@ -1,5 +1,77 @@
-import { Data, IProductInput } from '@/types';
+import { Data, IProductInput, IUserInput } from '@/types';
 import { toSlug } from './utils';
+import bcrypt from 'bcryptjs';
+
+const users: IUserInput[] = [
+  {
+    name: 'John',
+    email: 'admin@example.com',
+    password: bcrypt.hashSync('12345', 5),
+    role: 'Admin',
+    address: {
+      fullName: 'John Doe',
+      street: '111 Main St.',
+      city: 'New York',
+      state: 'NY',
+      postalCode: '10001',
+      country: 'USA',
+      phone: '123-123-1234',
+    },
+    paymentMethod: 'Stripe',
+    emailVerified: false,
+  },
+  {
+    name: 'Jane',
+    email: 'jane@example.com',
+    password: bcrypt.hashSync('12345', 5),
+    role: 'User',
+    address: {
+      fullName: 'Jane Harris',
+      street: '222 Main St.',
+      city: 'New York',
+      state: 'NY',
+      postalCode: '10002',
+      country: 'USA',
+      phone: '123-123-1234',
+    },
+    paymentMethod: 'Stripe',
+    emailVerified: false,
+  },
+  {
+    name: 'Abebe',
+    email: 'abebe@gmail.com',
+    password: bcrypt.hashSync('12345', 5),
+    role: 'Admin',
+    address: {
+      fullName: 'Abebe Bekele',
+      street: '333 Main St.',
+      city: 'New York',
+      state: 'NY',
+      postalCode: '10003',
+      country: 'USA',
+      phone: '123-123-1234',
+    },
+    paymentMethod: 'Stripe',
+    emailVerified: false,
+  },
+  {
+    name: 'Temesgen',
+    email: 'temesgen@gmail.com',
+    password: bcrypt.hashSync('12345', 5),
+    role: 'Admin',
+    address: {
+      fullName: 'Temesgen Birechis',
+      street: '777 Main St.',
+      city: 'Houston',
+      state: 'TX',
+      postalCode: '77081',
+      country: 'USA',
+      phone: '123-123-1234',
+    },
+    paymentMethod: 'Stripe',
+    emailVerified: false,
+  },
+];
 
 const products: IProductInput[] = [
   {
@@ -708,6 +780,7 @@ const products: IProductInput[] = [
 ];
 
 const data: Data = {
+  users,
   products,
   headerMenu: [
     {
