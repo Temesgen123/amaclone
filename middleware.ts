@@ -12,3 +12,4 @@ export const config = {
    * - favicon.ico (favicon file)
    */
 };
+export default middleware;
