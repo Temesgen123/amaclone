@@ -1,7 +1,12 @@
 'use server';
 import { signIn, signOut } from '@/auth';
-import { IUserSignIn } from '@/types';
+import { IUserSignIn, IUserSignUp } from '@/types';
 import { redirect } from 'next/navigation';
+import { UserSignInSchema, UserSignUpSchema } from '../validator';
+import { connectToDatabase } from '../db';
+import User from '@/lib/db/models/user.model';
+import bcrypt from 'bcryptjs';
+import { formatError } from 'zod';
 
 export async function signInWithCredentials(user: IUserSignIn) {
   return await signIn('credentials', { ...user, redirect: false });
@@ -10,3 +15,24 @@ export const SignOut = async () => {
   const redirectTo = await signOut({ redirect: false });
   redirect(redirectTo.redirect);
 };
+
+//Create
+export async function registerUser(userSignUp: IUserSignUp) {
+  try {
+    const user = await UserSignUpSchema.parseAsync({
+      name: userSignUp.name,
+      email: userSignUp.email,
+      password: userSignUp.password,
+      confirmPassword: userSignUp.confirmPassword,
+    });
+    await connectToDatabase();
+    await User.create({
+      ...user,
+      password: await bcrypt.hash(user.password, 5),
+    });
+    return { success: true, mesasge: 'User created successfully.' };
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    return { success: false, error: formatError(error) };
+  }
+}
