@@ -2,7 +2,7 @@
 import { signIn, signOut } from '@/auth';
 import { IUserSignIn, IUserSignUp } from '@/types';
 import { redirect } from 'next/navigation';
-import { UserSignInSchema, UserSignUpSchema } from '../validator';
+import { UserSignUpSchema } from '../validator';
 import { connectToDatabase } from '../db';
 import User from '@/lib/db/models/user.model';
 import bcrypt from 'bcryptjs';
@@ -14,6 +14,9 @@ export async function signInWithCredentials(user: IUserSignIn) {
 export const SignOut = async () => {
   const redirectTo = await signOut({ redirect: false });
   redirect(redirectTo.redirect);
+};
+export const SignInWithGoogle = async () => {
+  await signIn('google');
 };
 
 //Create

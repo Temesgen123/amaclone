@@ -7,6 +7,7 @@ import User from '@/lib/db/models/user.model';
 
 import NextAuth, { type DefaultSession } from 'next-auth';
 import authConfig from './app/auth.config';
+import Google from 'next-auth/providers/google';
 
 declare module 'next-auth' {
   interface Session {
@@ -28,6 +29,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   adapter: MongoDBAdapter(client),
   providers: [
+    Google({
+      allowDangerousEmailAccountLinking: true,
+    }),
     CredentialProviders({
       credentials: {
         email: {
@@ -44,7 +48,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (user && user.password) {
           const isMatch = await bcrypt.compare(
             credentials.password as string,
-            user.password
+            user.password,
           );
           if (isMatch) {
             return {

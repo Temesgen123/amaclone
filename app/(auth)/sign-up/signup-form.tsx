@@ -52,10 +52,12 @@ export default function SignUpForm() {
     try {
       const res = await registerUser(data);
       if (!res.success) {
-        toast('Error: Failed to register user.', {
+        toast.error('Error: Failed to register user.', {
           description: 'Error: Failed to register user.',
         });
         return;
+      } else {
+        toast.success(res.mesasge);
       }
       await signInWithCredentials({
         email: data.email,
@@ -66,7 +68,7 @@ export default function SignUpForm() {
       if (isRedirectError(error)) {
         throw error;
       }
-      toast('Error: Invalid email or password.', {
+      toast.error('Error: Invalid email or password.', {
         description: 'Invalid email or password.',
       });
     }
