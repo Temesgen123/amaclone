@@ -6,7 +6,7 @@ const Price = (field: string) =>
     .number()
     .refine(
       (value) => /^\d+(\.\d{2})?$/.test(formatNumberWithDecimal(value)),
-      `${field} must have exactlt two decimal places (e.g., 49.99)`
+      `${field} must have exactlt two decimal places (e.g., 49.99)`,
     );
 
 //Product Schema
@@ -65,6 +65,15 @@ export const OrderItemSchema = z.object({
   size: z.string().optional(),
   color: z.string().optional(),
 });
+export const ShippingAddressSchema = z.object({
+  fullName: z.string().min(1, 'Full name is required.'),
+  street: z.string().min(1, 'Street is required.'),
+  city: z.string().min(1, 'City is required.'),
+  postalCode: z.string().min(1, 'Postal Code is required.'),
+  state: z.string().min(1, 'State is required.'),
+  phone: z.string().min(1, 'phone number is required.'),
+  country: z.string().min(1, 'Contry is required.'),
+});
 export const CartSchema = z.object({
   items: z
     .array(OrderItemSchema)
@@ -74,6 +83,7 @@ export const CartSchema = z.object({
   shippingPrice: z.optional(z.number()),
   totalPrice: z.number(),
   paymentMethod: z.optional(z.string()),
+  shippingAddress: z.optional(ShippingAddressSchema),
   deliveryDateIndex: z.optional(z.number()),
   expectedDeliveryDate: z.optional(z.date()),
 });
@@ -105,7 +115,6 @@ export const UserInputSchema = z.object({
     phone: z.string().min(1, 'Phone number is required.'),
   }),
 });
-
 export const UserSignInSchema = z.object({
   email: Email,
   password: Password,

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { Cart, OrderItem } from '@/types';
+import { Cart, OrderItem, ShippingAddress } from '@/types';
 import { calcDeliveryDateAndPrice } from '@/lib/actions/order.actions';
 
 const initialState: Cart = {
@@ -11,6 +11,7 @@ const initialState: Cart = {
   shippingPrice: undefined,
   totalPrice: 0,
   paymentMethod: undefined,
+  shippingAddress: undefined,
   deliveryDateIndex: undefined,
 };
 interface CartState {
@@ -18,18 +19,22 @@ interface CartState {
   addItem: (item: OrderItem, quantity: number) => Promise<string>;
   updateItem: (item: OrderItem, quantity: number) => Promise<void>;
   removeItem: (item: OrderItem) => void;
+  clearCart: () => void;
+  setShippingAddress: (shippingAddress: ShippingAddress) => Promise<void>;
+  setPaymentMethod: (paymentMethod: string) => void;
+  setDeliveryDateIndex: (index: number) => Promise<void>;
 }
 const useCartStore = create(
   persist<CartState>(
     (set, get) => ({
       cart: initialState,
       addItem: async (item: OrderItem, quantity: number) => {
-        const { items } = get().cart;
+        const { items, shippingAddress } = get().cart;
         const existItem = items.find(
           (x) =>
             x.product === item.product &&
             x.color === item.color &&
-            x.size === item.size
+            x.size === item.size,
         );
         if (existItem) {
           if (existItem.countInStock < quantity + existItem.quantity) {
@@ -46,7 +51,7 @@ const useCartStore = create(
               x.color === item.color &&
               x.size === item.size
                 ? { ...existItem, quantity: existItem.quantity + quantity }
-                : x
+                : x,
             )
           : [...items, { ...item, quantity }];
         set({
@@ -55,6 +60,7 @@ const useCartStore = create(
             items: updatedCartItems,
             ...(await calcDeliveryDateAndPrice({
               items: updatedCartItems,
+              shippingAddress,
             })),
           },
         });
@@ -63,16 +69,16 @@ const useCartStore = create(
           (x) =>
             x.product === item.product &&
             x.color === item.color &&
-            x.size === item.size
+            x.size === item.size,
         )?.clientId!;
       },
       updateItem: async (item: OrderItem, quantity: number) => {
-        const { items } = get().cart;
+        const { items, shippingAddress } = get().cart;
         const exist = items.find(
           (x) =>
             x.product === item.product &&
             x.color === item.color &&
-            x.size === item.size
+            x.size === item.size,
         );
         if (!exist) return;
         const updatedCartItems = items.map((x) =>
@@ -83,7 +89,7 @@ const useCartStore = create(
                 ...exist,
                 quantity: quantity,
               }
-            : x
+            : x,
         );
         set({
           cart: {
@@ -91,17 +97,18 @@ const useCartStore = create(
             items: updatedCartItems,
             ...(await calcDeliveryDateAndPrice({
               items: updatedCartItems,
+              shippingAddress,
             })),
           },
         });
       },
       removeItem: async (item: OrderItem) => {
-        const { items } = get().cart;
+        const { items, shippingAddress } = get().cart;
         const updatedCartItems = items.filter(
           (x) =>
             x.product !== item.product ||
             x.color !== item.color ||
-            x.size !== item.size
+            x.size !== item.size,
         );
         set({
           cart: {
@@ -109,7 +116,50 @@ const useCartStore = create(
             items: updatedCartItems,
             ...(await calcDeliveryDateAndPrice({
               items: updatedCartItems,
+              shippingAddress,
             })),
+          },
+        });
+      },
+      setShippingAddress: async (shippingAddress: ShippingAddress) => {
+        const { items } = get().cart;
+        set({
+          cart: {
+            ...get().cart,
+            shippingAddress,
+            ...(await calcDeliveryDateAndPrice({
+              items,
+              shippingAddress,
+            })),
+          },
+        });
+      },
+      setPaymentMethod: (paymentMethod: string) => {
+        set({
+          cart: {
+            ...get().cart,
+            paymentMethod,
+          },
+        });
+      },
+      setDeliveryDateIndex: async (index: number) => {
+        const { items, shippingAddress } = get().cart;
+        set({
+          cart: {
+            ...get().cart,
+            ...(await calcDeliveryDateAndPrice({
+              items,
+              shippingAddress,
+              deliveryDateIndex: index,
+            })),
+          },
+        });
+      },
+      clearCart: () => {
+        set({
+          cart: {
+            ...get().cart,
+            items: [],
           },
         });
       },
@@ -117,7 +167,7 @@ const useCartStore = create(
     }),
     {
       name: 'cart-store',
-    }
-  )
+    },
+  ),
 );
 export default useCartStore;
