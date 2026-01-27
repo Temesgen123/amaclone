@@ -42,6 +42,8 @@ import {
   AVAILABLE_PAYMENT_METHODS,
   DEFAULT_PAYMENT_METHOD,
 } from '@/lib/constants';
+import { createOrder } from '@/lib/actions/order.actions';
+import { toast } from 'sonner';
 
 const shippingAddressDefaultValues =
   process.env.NODE_ENV === 'development'
@@ -64,6 +66,7 @@ const shippingAddressDefaultValues =
         country: '',
       };
 const CheckoutForm = () => {
+  const { clearCart } = useCartStore();
   const router = useRouter();
   const {
     cart: {
@@ -107,7 +110,26 @@ const CheckoutForm = () => {
   const [isDeliveryDateSelected, setIsDeliveryDateSelected] =
     useState<boolean>(false);
   const handlePlaceOrder = async () => {
-    //TODO PLACEHOLDER
+    const res = await createOrder({
+      items,
+      shippingAddress,
+      expectedDeliveryDate: calculateFutureDate(
+        AVAILABLE_DELIVERY_DATES[deliveryDateIndex!].daysToDeliver,
+      ),
+      deliveryDateIndex,
+      paymentMethod,
+      itemsPrice,
+      shippingPrice,
+      taxPrice,
+      totalPrice,
+    });
+    if (!res.success) {
+      toast('Order failed!', { description: res.message });
+    } else {
+      toast('Message!', { description: res.message });
+      clearCart();
+      router.push(`/checkout/${res.data?.orderId}`);
+    }
   };
   const handleSelectPaymentMethod = () => {
     setIsAddressSelected(true);
