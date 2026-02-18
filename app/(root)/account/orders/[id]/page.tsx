@@ -25,9 +25,9 @@ export default async function OrderDetailsPage(props: {
     <>
       <div className="flex gap-2">
         <Link href="/account">Your account</Link>
-        <span>,</span>
+        <span>{'>'}</span>
         <Link href="/account/orders">Your order</Link>
-        <span>,</span>
+        <span>{'>'}</span>
         <span>Order {formatId(order._id)}</span>
       </div>
       <h1>Order {formatId(order._id)}</h1>
