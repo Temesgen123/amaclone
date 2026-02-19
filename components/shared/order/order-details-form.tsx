@@ -55,7 +55,7 @@ export default function OrderDetailsForm({
             </p>
             {isDelivered ? (
               <Badge>
-                Deloivered at {formatDateTime(deliveredAt!).dateTime}
+                Delivered at {formatDateTime(deliveredAt!).dateTime}
               </Badge>
             ) : (
               <div>
