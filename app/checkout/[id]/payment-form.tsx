@@ -120,7 +120,7 @@ export default function OrderPaymentForm({
                 </PayPalScriptProvider>
               </div>
             )}
-            {!isPaid && paymentMethod === 'stripe' && clientSecret && (
+            {!isPaid && paymentMethod === 'Stripe' && clientSecret && (
               <Elements options={{ clientSecret }} stripe={stripePromise}>
                 <StripeForm
                   priceInCents={Math.round(order.totalPrice * 100)}
